@@ -127,5 +127,5 @@ function sendMessage() {
   document.getElementById("message").value = ''; // Pulisci il campo del messaggio
 }
 
-// Inizializza la visualizzazione della prima traduzione
-showTranslation();
+// Inizializza la visualizzazione della prima traduzione al caricamento della pagina
+window.onload = showTranslation;
