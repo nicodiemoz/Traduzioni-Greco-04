@@ -92,6 +92,7 @@ const verbi = [
   ]
 ];
 
+
 let currentWordIndex = 0;
 let currentMode = 'nomi';
 let shuffledWords = [];
@@ -118,16 +119,19 @@ document.getElementById("startQuiz").addEventListener("click", function () {
     } else {
         shuffledWords = [...nomi, ...aggettivi, ...verbi, ...complementi];
     }
-    
+
     shuffle(shuffledWords);
     currentWordIndex = 0;
     document.getElementById("quizContainer").style.display = "block";
     document.getElementById("quizAnswer").style.display = "none";
+    document.getElementById("nextBtn").style.display = "block"; // Mostra il pulsante "Vedi Risposta"
     showNextWord();
 });
 
 document.getElementById("nextBtn").addEventListener("click", function () {
     document.getElementById("quizAnswer").style.display = "block";
+    // Chiamata a showNextWord() per passare alla prossima parola dopo aver mostrato la risposta
+    setTimeout(showNextWord, 2000); // Attendere 2 secondi prima di passare alla prossima parola
 });
 
 function showNextWord() {
@@ -140,7 +144,7 @@ function showNextWord() {
         currentWordIndex++;
     } else {
         document.getElementById("quizPrompt").textContent = "Quiz terminato!";
-        document.getElementById("nextBtn").style.display = "none";
-        document.getElementById("quizAnswer").style.display = "none";
+        document.getElementById("nextBtn").style.display = "none"; // Nascondi il pulsante "Vedi Risposta"
+        document.getElementById("quizAnswer").style.display = "none"; // Nascondi la risposta finale
     }
 }
