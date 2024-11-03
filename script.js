@@ -122,13 +122,7 @@ document.getElementById("startQuiz").addEventListener("click", function () {
     shuffle(shuffledWords);
     currentWordIndex = 0;
     document.getElementById("quizContainer").style.display = "block";
-    document.getElementById("quizAnswer").style.display = "none";
-    document.getElementById("nextBtn").style.display = "none"; // Nascondi il pulsante per passare alla prossima parola
     showNextWord();
-});
-
-document.getElementById("nextBtn").addEventListener("click", function () {
-    showNextWord(); // Passa alla prossima parola
 });
 
 function showNextWord() {
@@ -139,25 +133,13 @@ function showNextWord() {
         document.getElementById("quizAnswer").style.display = "none"; // Nascondi la risposta inizialmente
 
         // Mostra la parola e prepara per la risposta
+        document.getElementById("quizAnswer").style.display = "block"; // Mostra la risposta subito dopo
         currentWordIndex++;
-        document.getElementById("nextBtn").style.display = "block"; // Mostra il pulsante "Vedi Risposta"
     } else {
         document.getElementById("quizPrompt").textContent = "Quiz terminato!";
-        document.getElementById("nextBtn").style.display = "none"; // Nascondi il pulsante quando il quiz è finito
         document.getElementById("quizAnswer").style.display = "none"; // Nascondi la risposta
     }
 }
 
-// Aggiungere un evento per il pulsante "Vedi Risposta"
-const seeAnswerBtn = document.createElement("button");
-seeAnswerBtn.textContent = "Vedi Risposta";
-seeAnswerBtn.id = "seeAnswerBtn";
-document.getElementById("quizContainer").insertBefore(seeAnswerBtn, document.getElementById("nextBtn"));
-seeAnswerBtn.addEventListener("click", function () {
-    document.getElementById("quizAnswer").style.display = "block"; // Mostra la risposta
-    seeAnswerBtn.style.display = "none"; // Nascondi il pulsante "Vedi Risposta" dopo aver mostrato la risposta
-    document.getElementById("nextBtn").style.display = "block"; // Mostra il pulsante "Prossima Parola"
-});
-
-// Inizializza lo stato del pulsante
-seeAnswerBtn.style.display = "none"; // Inizialmente non mostrato
+// Aggiungi un evento al pulsante per passare alla parola successiva
+document.getElementById("nextWordBtn").addEventListener("click", showNextWord);
