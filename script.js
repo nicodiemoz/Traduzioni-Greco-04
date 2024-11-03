@@ -73,7 +73,7 @@ const verbi = [
     { parola: "λανθάνω", traduzione: "sto nascosto (nel part.) di nascosto" },
     { parola: "φθάνω", traduzione: "prevengo (nel part.) primo/per primo" },
     { parola: "δηλόω", traduzione: "appaio/mi mostro (nel part.) chiaramente" }
-],
+];
 
     
   const complementi = [
@@ -89,7 +89,6 @@ const verbi = [
     { parola: "ὑπό / παρά / εκ / από + genitivo/dativo", traduzione: "Agente/Causa efficiente" },
     { parola: "εν + dativo / πρό + genitivo (prima) / μετά + accusativo/genitivo (dopo)", traduzione: "Tempo determinato" },
     { parola: "εν / πρό / μετά + accusativo", traduzione: "Tempo continuato" }
-  ]
 ];
 
 
