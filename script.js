@@ -92,54 +92,40 @@ const verbi = [
 ];
 
 
-let currentWordIndex = 0;
-let currentMode = 'nomi';
-let shuffledWords = [];
+let mode = 'greek-italian';  // Modalità iniziale
+let currentWord = 0;          // Indice della parola corrente
 
-// Funzione per mescolare un array
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
+function showTranslation() {
+  const text = document.getElementById("text");
+  if (mode === 'greek-italian') {
+    text.textContent = words[currentWord].italian; // Mostra la traduzione italiana
+  } else {
+    text.textContent = words[currentWord].greek;   // Mostra la parola greca
+  }
 }
 
-document.getElementById("startQuiz").addEventListener("click", function () {
-    currentMode = document.getElementById("modalita").value;
-
-    if (currentMode === 'nomi') {
-        shuffledWords = [...nomi];
-    } else if (currentMode === 'aggettivi') {
-        shuffledWords = [...aggettivi];
-    } else if (currentMode === 'verbi') {
-        shuffledWords = [...verbi];
-    } else if (currentMode === 'complementi') {
-        shuffledWords = [...complementi];
-    } else {
-        shuffledWords = [...nomi, ...aggettivi, ...verbi, ...complementi];
-    }
-
-    shuffle(shuffledWords);
-    currentWordIndex = 0;
-    document.getElementById("quizContainer").style.display = "block";
-    showNextWord();
+// Gestisce il cambio di modalità e mostra la parola successiva
+document.getElementById("toggle-mode").addEventListener("click", () => {
+  mode = mode === 'greek-italian' ? 'italian-greek' : 'greek-italian'; // Cambia modalità
+  document.getElementById("toggle-mode").textContent = 
+    `Modalità: ${mode === 'greek-italian' ? 'Greco → Italiano' : 'Italiano → Greco'}`;
+  
+  currentWord = (currentWord + 1) % words.length; // Passa alla parola successiva
+  showTranslation(); // Mostra la traduzione della nuova parola
 });
 
-function showNextWord() {
-    if (currentWordIndex < shuffledWords.length) {
-        let word = shuffledWords[currentWordIndex];
-        document.getElementById("quizPrompt").textContent = `Parola: ${word.parola}`;
-        document.getElementById("quizAnswer").textContent = `Traduzione: ${word.traduzione}`;
-        document.getElementById("quizAnswer").style.display = "none"; // Nascondi la risposta inizialmente
-
-        // Mostra la parola e prepara per la risposta
-        document.getElementById("quizAnswer").style.display = "block"; // Mostra la risposta subito dopo
-        currentWordIndex++;
-    } else {
-        document.getElementById("quizPrompt").textContent = "Quiz terminato!";
-        document.getElementById("quizAnswer").style.display = "none"; // Nascondi la risposta
-    }
+// Funzione per inviare messaggi
+function sendMessage() {
+  const username = document.getElementById("username").value;
+  const message = document.getElementById("message").value;
+  if (!username || !message) return;
+  
+  const chatBox = document.getElementById("chat-box");
+  chatBox.innerHTML += `<p><strong>${username}</strong>: ${message}</p>`;
+  chatBox.scrollTop = chatBox.scrollHeight; // Scorre verso il basso per mostrare l'ultimo messaggio
+  
+  document.getElementById("message").value = ''; // Pulisci il campo del messaggio
 }
 
-// Aggiungi un evento al pulsante per passare alla parola successiva
-document.getElementById("nextWordBtn").addEventListener("click", showNextWord);
+// Inizializza la visualizzazione della prima traduzione
+showTranslation();
