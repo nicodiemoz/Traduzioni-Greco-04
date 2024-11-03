@@ -123,14 +123,12 @@ document.getElementById("startQuiz").addEventListener("click", function () {
     currentWordIndex = 0;
     document.getElementById("quizContainer").style.display = "block";
     document.getElementById("quizAnswer").style.display = "none";
-    document.getElementById("nextBtn").style.display = "block"; // Mostra il pulsante "Vedi Risposta"
+    document.getElementById("nextBtn").style.display = "none"; // Nascondi il pulsante per passare alla prossima parola
     showNextWord();
 });
 
 document.getElementById("nextBtn").addEventListener("click", function () {
-    document.getElementById("quizAnswer").style.display = "block";
-    // Chiamata a showNextWord() per passare alla prossima parola dopo aver mostrato la risposta
-    setTimeout(showNextWord, 2000); // Attendere 2 secondi prima di passare alla prossima parola
+    showNextWord(); // Passa alla prossima parola
 });
 
 function showNextWord() {
@@ -138,12 +136,28 @@ function showNextWord() {
         let word = shuffledWords[currentWordIndex];
         document.getElementById("quizPrompt").textContent = `Parola: ${word.parola}`;
         document.getElementById("quizAnswer").textContent = `Traduzione: ${word.traduzione}`;
-        document.getElementById("quizAnswer").style.display = "none";
+        document.getElementById("quizAnswer").style.display = "none"; // Nascondi la risposta inizialmente
 
+        // Mostra la parola e prepara per la risposta
         currentWordIndex++;
+        document.getElementById("nextBtn").style.display = "block"; // Mostra il pulsante "Vedi Risposta"
     } else {
         document.getElementById("quizPrompt").textContent = "Quiz terminato!";
-        document.getElementById("nextBtn").style.display = "none"; // Nascondi il pulsante "Vedi Risposta"
-        document.getElementById("quizAnswer").style.display = "none"; // Nascondi la risposta finale
+        document.getElementById("nextBtn").style.display = "none"; // Nascondi il pulsante quando il quiz è finito
+        document.getElementById("quizAnswer").style.display = "none"; // Nascondi la risposta
     }
 }
+
+// Aggiungere un evento per il pulsante "Vedi Risposta"
+const seeAnswerBtn = document.createElement("button");
+seeAnswerBtn.textContent = "Vedi Risposta";
+seeAnswerBtn.id = "seeAnswerBtn";
+document.getElementById("quizContainer").insertBefore(seeAnswerBtn, document.getElementById("nextBtn"));
+seeAnswerBtn.addEventListener("click", function () {
+    document.getElementById("quizAnswer").style.display = "block"; // Mostra la risposta
+    seeAnswerBtn.style.display = "none"; // Nascondi il pulsante "Vedi Risposta" dopo aver mostrato la risposta
+    document.getElementById("nextBtn").style.display = "block"; // Mostra il pulsante "Prossima Parola"
+});
+
+// Inizializza lo stato del pulsante
+seeAnswerBtn.style.display = "none"; // Inizialmente non mostrato
